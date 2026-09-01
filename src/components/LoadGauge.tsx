@@ -23,6 +23,7 @@ export function LoadGauge({ load, palette }: Props) {
 
   return (
     <View
+      testID="load-gauge"
       style={styles.container}
       // The parent row carries the spoken description, so this purely
       // decorative duplicate is hidden from screen readers.
@@ -36,6 +37,9 @@ export function LoadGauge({ load, palette }: Props) {
         return (
           <View
             key={index}
+            // Encoding filled state in the testID lets tests count
+            // segments without serialising the whole render tree.
+            testID={isFilled ? 'gauge-segment-filled' : 'gauge-segment-empty'}
             style={[
               styles.segment,
               {

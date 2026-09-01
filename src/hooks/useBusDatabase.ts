@@ -8,7 +8,7 @@
  */
 
 import { useCallback, useEffect, useState } from 'react';
-import { getAllBusStops, getAllBusServices } from '../utils/__tests__/lta';
+import { getAllBusStops, getAllBusServices } from '../services/lta';
 import { readCache, writeCache, CacheKey } from '../services/storage';
 import type { BusStop, BusService } from '../types/lta';
 
