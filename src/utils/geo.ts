@@ -5,6 +5,8 @@
  * tested against known coordinates rather than requiring a device.
  */
 
+import type { BusStop } from '../types/lta';
+
 /** Mean radius of the Earth in metres. */
 const EARTH_RADIUS_M = 6_371_000;
 
@@ -20,6 +22,11 @@ export const WALKING_SPEED_M_PER_MIN = 80;
 export interface Coordinates {
   latitude: number;
   longitude: number;
+}
+
+/** Translate LTA's field names to the coordinates used by location helpers. */
+export function stopCoordinates(stop: BusStop): Coordinates {
+  return { latitude: stop.Latitude, longitude: stop.Longitude };
 }
 
 function toRadians(degrees: number): number {

@@ -1,14 +1,13 @@
 /**
  * Bottom tab navigation.
  *
- * Three tabs only. A transit app is used one-handed, often while
- * walking, so the targets stay large and the choices few.
+ * A transit app is used one-handed, often while walking, so the targets
+ * stay large and the labels short.
  */
 
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../src/theme/useTheme';
-
 
 export default function TabLayout() {
   const { palette } = useTheme();
@@ -50,6 +49,15 @@ export default function TabLayout() {
           title: 'Saved',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="bookmark-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings-outline" size={size} color={color} />
           ),
         }}
       />

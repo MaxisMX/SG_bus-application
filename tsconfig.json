@@ -2,9 +2,19 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "types": ["jest", "node", "react", "react-native"],
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@react-navigation/native": [
+        "./node_modules/expo-router/react-navigation"
+      ],
+      "@react-navigation/elements": [
+        "./node_modules/expo-router/react-navigation"
+      ],
+      "@react-navigation/bottom-tabs": [
+        "./node_modules/expo-router/js-tabs"
       ]
     }
   },

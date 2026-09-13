@@ -9,7 +9,7 @@
  * When the user's walking time to the stop is known, a verdict appears
  * telling them whether the bus is still catchable.
  */
-
+import * as Haptics from 'expo-haptics';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import type { ArrivalService, NextBus } from '../types/lta';
@@ -125,7 +125,10 @@ export function ArrivalRow({
 
       {onToggleSave ? (
         <Pressable
-          onPress={onToggleSave}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            onToggleSave();
+          }}
           accessibilityRole="button"
           accessibilityLabel={
             isSaved

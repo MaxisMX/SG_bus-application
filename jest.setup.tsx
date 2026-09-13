@@ -13,19 +13,19 @@
 // In-memory replacement for device storage. Reset between tests so
 // nothing leaks from one case to the next.
 jest.mock('@react-native-async-storage/async-storage', () => {
-  let store = {};
+  let store: Record<string, string> = {};
 
   return {
-    getItem: jest.fn(key => Promise.resolve(store[key] ?? null)),
-    setItem: jest.fn((key, value) => {
+    getItem: jest.fn((key: string) => Promise.resolve(store[key] ?? null)),
+    setItem: jest.fn((key: string, value: string) => {
       store[key] = value;
       return Promise.resolve();
     }),
-    removeItem: jest.fn(key => {
+    removeItem: jest.fn((key: string) => {
       delete store[key];
       return Promise.resolve();
     }),
-    multiRemove: jest.fn(keys => {
+    multiRemove: jest.fn((keys: string[]) => {
       for (const key of keys) delete store[key];
       return Promise.resolve();
     }),

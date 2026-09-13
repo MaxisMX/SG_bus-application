@@ -30,6 +30,7 @@ import { useTheme } from '../../src/theme/useTheme';
 import { space, type } from '../../src/theme/tokens';
 import { compareServiceNo } from '../../src/utils/search';
 import {
+  stopCoordinates,
   haversineMeters,
   walkingMinutes,
   formatDistance,
@@ -57,7 +58,7 @@ export default function StopScreen() {
   const walk = useMemo(() => {
     if (!coords || !stop) return undefined;
 
-    const meters = haversineMeters(coords, stop);
+    const meters = haversineMeters(coords, stopCoordinates(stop));
     return { meters, minutes: walkingMinutes(meters) };
   }, [coords, stop]);
 

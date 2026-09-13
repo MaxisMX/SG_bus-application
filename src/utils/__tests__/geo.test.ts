@@ -1,4 +1,5 @@
 import {
+  stopCoordinates,
   haversineMeters,
   formatDistance,
   walkingMinutes,
@@ -14,6 +15,32 @@ import {
   groupByStop,
   type Favourite,
 } from '../favourites';
+import type { BusStop } from '../../types/lta';
+
+describe('stopCoordinates', () => {
+  const stop: BusStop = {
+    BusStopCode: '01012',
+    RoadName: 'Victoria St',
+    Description: 'Hotel Grand Pacific',
+    Latitude: 1.29684825,
+    Longitude: 103.85253591,
+  };
+
+  it('calculates a finite distance from an LTA bus stop', () => {
+    const origin = { latitude: 1.29770970, longitude: 103.85434686 };
+    const distance = haversineMeters(origin, stopCoordinates(stop));
+    expect(distance).toBeGreaterThan(180);
+    expect(distance).toBeLessThan(260);
+  });
+
+  it('keeps the stop identity when finding nearby stops', () => {
+    const locatedStop = { ...stop, ...stopCoordinates(stop) };
+    const nearby = sortByDistance([locatedStop], stopCoordinates(stop), 800, 20);
+    expect(nearby).toHaveLength(1);
+    expect(nearby[0]).toMatchObject({ ...stop, distance: 0 });
+    expect(stop).not.toHaveProperty('latitude');
+  });
+});
 
 describe('haversineMeters', () => {
   // Two real Singapore bus stops roughly 300 m apart on Victoria St.

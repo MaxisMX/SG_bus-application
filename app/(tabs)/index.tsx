@@ -22,6 +22,7 @@ import { StopRow } from '../../src/components/StopRow';
 import { useTheme } from '../../src/theme/useTheme';
 import { space, radius, type } from '../../src/theme/tokens';
 import {
+  stopCoordinates,
   sortByDistance,
   formatDistance,
   walkingMinutes,
@@ -38,7 +39,11 @@ export default function NearbyScreen() {
 
   const nearby = useMemo(() => {
     if (!coords || stops.length === 0) return [];
-    return sortByDistance(stops, coords, SEARCH_RADIUS_M, 20);
+    const locatedStops = stops.map(stop => ({
+      ...stop,
+      ...stopCoordinates(stop),
+    }));
+    return sortByDistance(locatedStops, coords, SEARCH_RADIUS_M, 20);
   }, [coords, stops]);
 
   const isLoading =
@@ -105,7 +110,7 @@ export default function NearbyScreen() {
         keyExtractor={item => item.BusStopCode}
         refreshControl={
           <RefreshControl
-            refreshing={locationStatus === 'requesting'}
+            refreshing={isLoading}
             onRefresh={request}
             tintColor={palette.textMuted}
           />
